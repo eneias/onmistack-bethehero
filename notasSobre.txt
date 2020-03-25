@@ -1,0 +1,18 @@
+query: parametros nomeados na rota após ? (pra filtros, paginação)
+route params: parâmetros utilizados para identificar recursos, após :
+Request Body: Corpo da requisição, utilizado para criar ou alterar recursos
+
+ENTIDADES DO BE THE HERO
+
+- ONG
+- CASOS
+
+FUNCIONALIDADES 
+- CADASTRO
+- LOGIN
+- LOGOUT
+- CADASTRAR CASO
+- DELETAR CASOS
+- LISTAR OS CASOS (DA ONG ESPECIFICA)
+- LISTAR TODOS OS CASOS (MOBILE)
+- ENTRAR EM CONTATO COM A ONG (MOBILE)
