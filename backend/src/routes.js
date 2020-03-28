@@ -1,4 +1,6 @@
 const express = require('express');
+const {celebrate,Segments, Joi} = require('celebrate');
+
 const connection = require('./database/connection');
 
 const OngController = require('./controllers/ongController');
@@ -14,13 +16,48 @@ const routes = express.Router();
 
 
 routes.get('/ongs',OngController.index);
-routes.post('/ongs',OngController.create);
+routes.post('/ongs',celebrate({
+
+    [Segments.BODY]: Joi.object().keys({
+
+        name: Joi.string().required(),
+        email: Joi.string().required().email(),
+        whatsapp: Joi.string().required().min(10).max(11),
+        cidade: Joi.string().required(),
+        uf: Joi.string().required().length(2),
+    })
+
+}),OngController.create);
 
 routes.post('/casos',casoController.create);
-routes.get('/casos',casoController.index);
-routes.delete('/casos/:id',casoController.delete);
 
-routes.get('/profile', profileController.index);
+routes.get('/casos',celebrate({
+
+    [Segments.QUERY]: Joi.object().keys({
+
+        page: Joi.number(),
+
+    })
+
+}),casoController.index);
+
+
+routes.delete('/casos/:id',celebrate({
+
+    [Segments.PARAMS]: Joi.object().keys({
+
+        id: Joi.number().required(),
+    })
+
+}),casoController.delete);
+
+routes.get('/profile', celebrate({
+
+    [Segments.HEADERS]: Joi.object({
+        authorization: Joi.string().required()
+    }).unknown(),
+
+}),profileController.index);
 
 routes.post('/session', sessionController.create);
 

@@ -49,7 +49,7 @@ module.exports = {
             .first();
 
             if(caso.ong_id != ong_id){
-                return response.status(401).json({error:'Operarion not permitted.'})
+                return response.status(401).json({error:'Operation not permitted.'})
             }
         await connection('casos').where('id',id).delete();
 
