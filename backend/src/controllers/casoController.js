@@ -2,11 +2,13 @@ const connection = require('../database/connection');
 
 module.exports = {
     async index(request,response){
+
+        console.log(request);
+        console.log(response);
+
         const {page = 1} = request.query;
 
-        const [count] = await connection('casos')
-        .count();
-
+        const [count] = await connection('casos').count();
 
         const incidents = await connection('casos')
         .join('ongs', 'ongs.id', '=', 'casos.ong_id')
@@ -27,16 +29,16 @@ module.exports = {
 
     },
     async create(request, response){
-    const {titulo, descricao,value} = request.body;
-    const ong_id = request.headers.authorization;
+        const {titulo, descricao,value} = request.body;
+        const ong_id = request.headers.authorization;
 
-    const [id] = await connection('casos').insert({
-        titulo,
-        ong_id,
-        descricao,
-        value
-    });
-    return response.json({id});
+        const [id] = await connection('casos').insert({
+            titulo,
+            ong_id,
+            descricao,
+            value
+        });
+        return response.json({id});
     },
 
     async delete(request,response){

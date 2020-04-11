@@ -8,18 +8,23 @@ module.exports = {
         const ongs = await connection('ongs').select('*');
         return response.json(ongs);
     },
-    async create(request,response){
+    async create(request,response, next){
+
+        console.log("-----");
+        console.log(response);
+        console.log("-----");
+
         const {name,email,whatsapp,cidade,uf}= request.body;
         const id = generateUniqueId();
 
-    await connection('ongs').insert({
-        id,
-        name,
-        email,
-        whatsapp,
-        cidade,
-        uf
-    })
+        await connection('ongs').insert({
+            id,
+            name,
+            email,
+            whatsapp,
+            cidade,
+            uf
+        })
    
 
     

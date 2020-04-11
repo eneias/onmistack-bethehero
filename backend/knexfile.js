@@ -1,13 +1,17 @@
 // Update with your config settings.
 
+const connection = {
+  host : '127.0.0.1',
+  user : 'root',
+  password : '',
+  database : 'test'
+}
+
 module.exports = {
 
   development: {
-    client: 'sqlite3',
-    connection: {
-      filename: './src/database/db.sqlite'
-    },
-
+    client: 'mysql',
+    connection,
     migrations:{
       directory:'./src/database/migrations'
     },
@@ -15,10 +19,8 @@ module.exports = {
   },
 
   test: {
-    client: 'sqlite3',
-    connection: {
-      filename: './src/database/test.sqlite'
-    },
+    client: 'mysql',
+    connection,
 
     migrations:{
       directory:'./src/database/migrations'
@@ -29,12 +31,8 @@ module.exports = {
 
 
   staging: {
-    client: 'postgresql',
-    connection: {
-      database: 'my_db',
-      user:     'username',
-      password: 'password'
-    },
+    client: 'mysql',
+    connection,
     pool: {
       min: 2,
       max: 10
@@ -45,12 +43,8 @@ module.exports = {
   },
 
   production: {
-    client: 'postgresql',
-    connection: {
-      database: 'my_db',
-      user:     'username',
-      password: 'password'
-    },
+    client: 'mysql',
+    connection,
     pool: {
       min: 2,
       max: 10

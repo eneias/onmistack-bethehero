@@ -17,13 +17,15 @@ export default function Register(){
         e.preventDefault();
         const data = {name,email,whatsapp,cidade,uf};
 
-    try{
-        const response = await api.post('ongs',data);
-        alert(`Seu ID de acesso:${response.data.id}`)
-    }
-    catch(err){
-        alert('Erro no cadastro, tente novamente.')
-    }
+        let response;
+
+        try{
+            response = await api.post('ongs', data);
+            alert(`Seu ID de acesso:${response.data.id}`)
+        }
+        catch( err ){
+            alert(err.response.data.message);
+        }
     }
    return(
     <div className="register-container">
