@@ -9,17 +9,19 @@ import logoImg from '../../assets/logo.svg';
 import heroesImg from '../../assets/heroes.png';
 
 export default function Logon(){
-    const  [id, setId] = useState('');
+    const  [username, setUsername] = useState('');
+    const  [password, setPassword] = useState('');
     const history = useHistory();
 
     async function handleLogin(e){
         e.preventDefault();
 
         try{
-            const response = await api.post('session', {id});
+            const response = await api.post('session', {username, password});
 
-            localStorage.setItem('ongId', id);
-            localStorage.setItem('ongName', response.data.name);
+            localStorage.setItem('id', response.data.id);
+            localStorage.setItem('name', response.data.name);
+            localStorage.setItem('username', response.data.username);
 
             history.push('/profile');
         }
@@ -34,7 +36,8 @@ export default function Logon(){
                <img src ={logoImg} alt ="Be The Hero" />
                <form onSubmit = {handleLogin}>
                    <h1>Faça seu Logon</h1>
-                   <input placeholder="Sua ID" value ={id} onChange = {e=> setId(e.target.value)}/>
+                   <input placeholder="email" value ={username} onChange = {e=> setUsername(e.target.value)}/>
+                   <input placeholder="senha" type="password" onChange = {e=> setPassword(e.target.value)}/>
                    <button className ="button" type ="submit">Entrar</button>
 
                    <Link className = "back-link" to="/register"> 
