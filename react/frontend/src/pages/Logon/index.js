@@ -31,22 +31,24 @@ export default function Logon(){
         }
     }
     return(
-       <div className="logon-container">
-           <section className="form">
-               <img src ={logoImg} alt ="Be The Hero" />
-               <form onSubmit = {handleLogin}>
-                   <h1>Faça seu Logon</h1>
-                   <input placeholder="email" value ={username} onChange = {e=> setUsername(e.target.value)}/>
-                   <input placeholder="senha" type="password" onChange = {e=> setPassword(e.target.value)}/>
-                   <button className ="button" type ="submit">Entrar</button>
 
-                   <Link className = "back-link" to="/register"> 
-                   <FiLogIn size ={16} color ="#e02041"/>
-                   Não tenho cadastro</Link>
-               </form>
+       <div className="logon-back">
+           <div className="logon-container">
+               <section className="form">
+                   <img src ={logoImg} alt ="Be The Hero" />
+                   <form onSubmit = {handleLogin}>
+                       <h1>Faça seu Logon</h1>
+                       <input placeholder="email" value ={username} onChange = {e=> setUsername(e.target.value)}/>
+                       <input placeholder="senha" type="password" onChange = {e=> setPassword(e.target.value)}/>
+                       <button className ="button" type ="submit">Entrar</button>
 
-           </section>
-           <img src={heroesImg} alt = "heroes" />
+                       <Link className = "back-link" to="/register"> 
+                       <FiLogIn size ={16} color ="#e02041"/>
+                       Não tenho cadastro</Link>
+                   </form>
+
+               </section>
+           </div>
        </div>
     );
 }

@@ -82,4 +82,4 @@ export default function Profile(){
         );
 }
 
-https://tylermcginnis.com/react-router-protected-routes-authentication/
+//https://tylermcginnis.com/react-router-protected-routes-authentication/
