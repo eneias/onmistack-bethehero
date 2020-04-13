@@ -4,6 +4,7 @@ import './styles.css';
 import {FiLogIn} from 'react-icons/fi';
 
 import api from '../../services/api';
+import Auth from '../../Auth';
 
 import logoImg from '../../assets/logo.svg';
 import heroesImg from '../../assets/heroes.png';
@@ -17,11 +18,14 @@ export default function Logon(){
         e.preventDefault();
 
         try{
-            const response = await api.post('session', {username, password});
+            const response = await api.post('login', {username, password});
 
             localStorage.setItem('id', response.data.id);
             localStorage.setItem('name', response.data.name);
             localStorage.setItem('username', response.data.username);
+            localStorage.setItem('token', response.data.token);
+
+            Auth.authenticate("user");
 
             history.push('/profile');
         }

@@ -4,33 +4,36 @@ import {Link, useHistory} from 'react-router-dom';
 import {FiPower, FiTrash2} from 'react-icons/fi';
 
 import api from '../../services/api';
+import base64 from '../../util/base64';
 import './styles.css';
-
-
 
 
 export default function Profile(){
 
     const[casos,setCasos] = useState([]);
     const history = useHistory();
-    const ongId = localStorage.getItem('ongId');
-    const ongName = localStorage.getItem('ongName');
+    const id = localStorage.getItem('id');
+    const name = localStorage.getItem('name');
+    const username = localStorage.getItem('username');
+    const token = localStorage.getItem('token');
 
+    console.log(token);
 
     useEffect(() =>{
-        api.get('profile', {headers:{
-            Authorization:ongId,
-        }
+        api.get('profile', {
+            headers:{
+                authorization: base64.toBase64(`Basic ${id}:${token}`)
+            }
     }).then(response =>{setCasos(response.data);
 
     })
-    },[ongId]);
+    },[id]);
     
      async function handleDeleteCaso(id){
         try{
             await api.delete(`casos/${id}`,{
             headers:{
-                Authorization: ongId,
+                Authorization: id,
             }
         });
 
@@ -53,7 +56,7 @@ export default function Profile(){
         <div className="profile-container">
             <header>
                 <img src ={logoImg} alt = "Be The Hero"/>
-                <span> Bem vinda, {ongName}</span>
+                <span> Bem vindo, {name} ({username})</span>
 
                 <Link className ="button" to ='/casos/new'>Cadastrar Novo Caso</Link>
                 <button type ="button">

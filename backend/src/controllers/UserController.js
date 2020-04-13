@@ -10,28 +10,45 @@ module.exports = {
 
         const {name, username, password, whatsapp, cidade, uf} = request.body;
         const ong_id = request.headers.authorization;
+        const created_at = new Date();
 
-        const [id] = await connection('users').insert({
-            name,
-            username,
-            password,
-            whatsapp,
-            cidade,
-            uf
-        });
-        return response.json({id});
+        try {
+            const [id] = await connection('users').insert({
+                name,
+                username,
+                password,
+                whatsapp,
+                cidade,
+                uf,
+                created_at
+            });
+            return response.json({id});
+        }
+        catch (e) {
+            let error = {
+                error: true,
+                message: e.sqlMessage
+            }
+            if( e.code === "ER_DUP_ENTRY" ) {
+                error.message = "Usuário já existe";
+            }
+            return response.json(error);
+        }
     },
     async login(request,response, next){
 
-        const {username, password} = request.body;
+        const { username, password } = request.body;
 
-        const [pass] = await connection('users')
-                                    .select('*')
-                                    .where("username", '=', username);
-        if(pass == password) {
+        const user = await connection('users')
+            .where('username', username)
+            .andWhere('password', password)
+            .select("*")
+            .first();
 
+        if(!user){
+            return response.status(400).json({error: "Usuario ou senha inválidos!"});
         }
-        const ong_id = request.headers.authorization;
-        return response.json({id});
+
+        return response.json(user);
     }
 }

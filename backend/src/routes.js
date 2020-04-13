@@ -6,7 +6,6 @@ const UserController = require('./controllers/UserController');
 const OngController = require('./controllers/ongController');
 const casoController = require('./controllers/casoController');
 const profileController = require('./controllers/profileController');
-const sessionController = require('./controllers/sessionController');
 
 const routes = express.Router();
 
@@ -22,6 +21,14 @@ routes.post('/users', celebrate({
         uf: Joi.string().required().length(2),
     })
 }),UserController.create);
+
+routes.get('/profile', celebrate({
+    [Segments.HEADERS]: Joi.object({
+        authorization: Joi.string().required()
+    }).unknown(),
+}),profileController.index);
+
+routes.post('/login', UserController.login);
 
 routes.get('/ongs',OngController.index);
 routes.post('/ongs', celebrate({
@@ -47,13 +54,5 @@ routes.delete('/casos/:id',celebrate({
         id: Joi.number().required(),
     })
 }),casoController.delete);
-
-routes.get('/profile', celebrate({
-    [Segments.HEADERS]: Joi.object({
-        authorization: Joi.string().required()
-    }).unknown(),
-}),profileController.index);
-
-routes.post('/session', sessionController.create);
 
 module.exports = routes;
